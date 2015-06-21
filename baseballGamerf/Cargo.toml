@@ -1,0 +1,7 @@
+[package]
+name = "baseballGamerf"
+version = "0.1.0"
+authors = ["KimSunghwan"]
+
+[dependencies]
+rand = "0.3.8"
