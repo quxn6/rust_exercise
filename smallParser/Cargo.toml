@@ -1,0 +1,4 @@
+[package]
+name = "smallParser"
+version = "0.1.0"
+authors = ["quxn6 <quxn6@naver.com>"]
