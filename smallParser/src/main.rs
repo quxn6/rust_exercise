@@ -6,6 +6,7 @@ use std::cell::RefCell;
 use std::default::Default;
 use std::rc::{Rc, Weak};
 use std::borrow::Cow;
+use std::borrow::BorrowMut;
 use std::ops::{Deref, DerefMut};
 use std::collections::HashMap;
 
@@ -105,15 +106,15 @@ fn main() {
     			} 
     			_ 		=> {	// 입력중이면 key, value를 생성
     				if is_key {
-    					temp_key.push(each_char);
+    					temp_key.borrow_mut().push(each_char);
     				} else {
-    					temp_value.push(each_char);
+    					temp_value.borrow_mut().push(each_char);
     				}
     			}
     		}
     	} else {
 	    	match each_char {
-	    		'\"' 	=> { is_writing = true; },
+	    		'"' 	=> { is_writing = true; },
 	    		':' 	=> { is_key = false; },
 	    		'{' 	=> {
 	    			// 새로운 자식 노드 생성
@@ -122,8 +123,8 @@ fn main() {
 	    			// 자식 노드 연결 
 	    			// this_node.borrow_mut().node.insert(temp_key, temp_node);
 	    			match this_node.borrow_mut().node {
-	    				NodeEnum::DICTIONARY(dic ) 	=> { dic.insert(temp_key, temp_node); },
-	    				NodeEnum::ARRAY(array )		=> { array.push(temp_node); },
+	    				NodeEnum::DICTIONARY(ref mut dic ) 	=> { dic.insert(temp_key, temp_node); },
+	    				//NodeEnum::ARRAY(ref mut array )		=> { array.push(temp_node); },
 	    				_ => println!("something Wrong.."),
 	    			}
 
