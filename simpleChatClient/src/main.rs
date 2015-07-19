@@ -12,14 +12,16 @@ fn write_thread(mut socket : TcpStream) {
 	        .expect("failed to read line");
 	    socket.write(&mut input.as_bytes());
 	    socket.flush();
+	    input.clear();
 	}
 }
 
-fn read_thread(socket : TcpStream ) {
+fn read_thread(mut socket : TcpStream ) {
     let mut read_buf : [u8; 128] = [0;128];
 
 	loop {
-    	let result = socket.try_clone().unwrap().read(&mut read_buf); // ignore here too
+		//let result = socket.try_clone().unwrap().read(&mut read_buf); // ignore here too
+    	let result = socket.read(&mut read_buf); // ignore here too
     	match result {
     		Ok(size) => {
     			if size > 0 {
